@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Books Home</title>
+    <style>
+        #recent-books{
+            display: inline-block;
+            width: 45%;
+        }
+        #other-books{
+            display: inline-block;
+            width: 35%;
+            vertical-align: top;
+        }
+        #book-list{
+            border: 2px solid black;
+            width: 95%;
+            overflow: scroll;
+            vertical-align: top;
+            height: 200px;
+            padding: 1%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{request.session.user_name}}!</h1>
+    
+    <a href="{% url 'books:logout' %}">Logout</a>
+    <br>
+    <br>
+    <a href="{% url 'books:add' %}">Add Book and Review</a>
+    <br>
+    <br>
+    <br>
+    <div id="recent-books">
+        <h4>Recent Book Reviews:</h4>
+        {% for review in reviews %}
+            <a href="{% url 'books:book' book_id=review.book.id %}"><h4>{{review.book.title}}</h4></a>
+            <p>Rating: {{review.rating}}</p>
+            <p><a href="">{{review.user.first_name}}</a> says: <i>{{review.content}}</i></p>
+            <p><i>Posted on {{review.created_at|date}}</i></p>
+
+        {% endfor %}
+    </div>
+    <div id="other-books">
+        <h4>Other Books with Reviews:</h4>
+        <div id="book-list">
+            {% for book in books %}
+                <a href="{% url 'books:book' book_id=book.id %}"><p>{{book.title}}</p></a>
+            {% endfor %}
+        </div>
+    </div>
+    
+</body>
+</html>

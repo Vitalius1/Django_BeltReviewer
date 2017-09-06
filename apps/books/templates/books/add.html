@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Book and Review</title>
+    <style>
+        #error{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="{% url 'books:index' %}">Home</a>
+    <br>
+    <br>
+    <a href="{% url 'books:logout' %}">Logout</a>
+    <br>
+    <br>
+    <h3>Add a New Book Title and a Review:</h3>
+    
+    
+    
+    <form action="{% url 'books:create' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{request.session.user_id}}">
+        <i id="error">{{errors.title_error}}</i>
+        <div>
+            <label for="title">Book Title:</label>
+            <input type="text" name="title">
+        </div>
+        <br>
+        <p>Author:</p>
+        <i id="error">{{errors.author_error}}</i>
+        <div>
+            <label for="existing_author">Choose from the list:</label>
+            <select name="existing_author">
+                <option value="">Select Author</option>
+                <option value="Vitalie Braga">Vitalie Braga</option>
+                <option value="Diana Braga">Diana Braga</option>
+                <option value="Galina Braga">Galina Braga</option>
+            </select>
+        </div>
+        <br>
+        <i id="error">{{errors.author_error2}}</i>
+        <div>
+            <label for="new_author">Or add a new author:</label>
+            <input type="text" name="new_author">
+        </div>
+        <br>
+        <i id="error">{{errors.review_error}}</i>
+        <div>
+            Review:
+            <textarea name="review" id="" cols="30" rows="10"></textarea>
+        </div>
+        <br>
+        <i id="error">{{errors.rating_error}}</i>
+        <label for="rating">Rating:</label>
+        <select name="rating">
+            <option value=""></option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Add Book and Review">
+    </form>
+
+</body>
+
+</html>
